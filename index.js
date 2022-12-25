@@ -78,7 +78,7 @@ app.delete("/api/delete/:id", async (req, res) => {
     res.status(404).json({ success: false });
   }
 });
-const port = process.env.PORT || 6000;
+const port = process.env.PORT || 8000;
     if (process.env.NODE_ENV === "production") {
       app.use(express.static("client/build"));
       app.get("*", (req, res) => {
