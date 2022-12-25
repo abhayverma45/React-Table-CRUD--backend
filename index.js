@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 
 const app = express();
 app.use(express.json());
+const dotenv = require("dotenv");
 // const Databaseconnection = require("./connector/db");
 const userModel = require("./models/details");
 
@@ -77,8 +78,21 @@ app.delete("/api/delete/:id", async (req, res) => {
     res.status(404).json({ success: false });
   }
 });
-
+const port = process.env.PORT || 6000;
+    if (process.env.NODE_ENV === "production") {
+      app.use(express.static("client/build"));
+      app.get("*", (req, res) => {
+        res.sendFile(
+          path.resolve(__dirname + "/Client/build/index.html"),
+          function (err) {
+            if (err) {
+              console.log(err);
+            }
+          }
+        );
+      });
+    }
 // Databaseconnection();
-app.listen(6000, () => {
+app.listen(port, () => {
   console.log("SERVER IS RUNNING AT 6000");
 });
